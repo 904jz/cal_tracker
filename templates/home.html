@@ -1,0 +1,100 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <h1 class="display-6">Hi {{ user.username }}!</h1>
+  <p class="text-right"><a href="{% url 'logout' %}">Log Out</a></p>
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col"></div>
+      <div class="col">
+        <form action='/' method="POST">
+          {% csrf_token %}
+          <label for="food">What did you eat today?</label>
+          <br>
+          <input type="text" id="food_eaten" name="food_eaten" placeholder="Ex. two eggs and a sprite">
+          <button class="btn btn-light" type="submit">Calculate</button>
+        </form>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-striped">
+          <tr>
+            <th>Food</th>
+            <th>Carbohydrates</th>
+            <th>Protein</th>
+            <th>Fat</th>
+            <th>Calories</th>
+          </tr>
+          
+          <tr>
+            <td>Hot dog</td>
+            <td>27g</td>
+            <td>14g</td>
+            <td>11g</td>
+            <td>220</td>
+          
+          </tr>
+          <tr>
+            <td>Banana</td>
+            <td>17g</td>
+            <td>3g</td>
+            <td>1g</td>
+            <td>85</td>
+          </tr>
+          <tr>
+            <td>Sprite</td>
+            <td>34g</td>
+            <td>0g</td>
+            <td>0g</td>
+            <td>125</td>
+          </tr>
+
+        </table>
+      </div>
+  <div class="col">
+    <canvas id="donut"></canvas>
+  </div>
+  <div class="col"></div>
+    </div>
+    <div class="row">
+      <div></div>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const ctx = document.getElementById('donut').getContext("2d");
+    
+    var values = JSON.parse("{{nutrition}}")
+      
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Carbohydrates', 'Fat', 'Protein'],
+        datasets: [{
+          label: 'Breakdown',
+          data: values,
+          borderWidth: 1,
+          backgroundColor: [
+            'rgb(233, 217, 133)',
+            'rgb(116, 156, 117)',
+            'rgb(93, 74, 102)'
+          ],
+          hoverOffset: 4
+        }]
+      }
+    });
+  </script>
+  
+  
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
