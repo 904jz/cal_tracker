@@ -13,6 +13,7 @@ def add_food(request):
     values = []
     context = {}
     cal_avg = 0
+    items = {}
     if request.user.is_authenticated:
         user = Profile.objects.get(user=request.user)
         if request.method == 'POST':
@@ -53,7 +54,7 @@ def add_food(request):
 
         values = [user.carbs,user.fat,user.protein]
         exp = json.dumps(values)
-        context = {"nutrition":exp,"calorie":cal_avg}   
+        context = {"nutrition":exp,"calorie":cal_avg, "items":items}   
 
 
 

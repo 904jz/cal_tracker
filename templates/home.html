@@ -5,7 +5,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  <h1 class="display-6">Hi {{ user.username }}!</h1>
+  <h5>Hi {{ user.username }}!</h5>
   <p class="text-right"><a href="{% url 'logout' %}">Log Out</a></p>
   <div class="container">
     <div class="row mb-5">
@@ -20,6 +20,7 @@
         </form>
       </div>
       <div class="col"></div>
+      <div class="col"></div>
     </div>
     <div class="row">
       <div class="col">
@@ -32,7 +33,19 @@
             <th>Calories</th>
           </tr>
           
+          {% for item in items %}
           <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.carbohydrates_total_g}}g</td>
+            <td>{{item.protein_g}}g</td>
+            <td>{{item.fat_total_g}}g</td>
+            <td>{{item.calories}}</td>
+          </tr>
+          {% endfor %}
+
+          <!-- PLACEHOLDER TABLE 
+            
+            <tr>
             <td>Hot dog</td>
             <td>27g</td>
             <td>14g</td>
@@ -53,9 +66,13 @@
             <td>0g</td>
             <td>0g</td>
             <td>125</td>
-          </tr>
+          </tr> -->
 
         </table>
+        <div>
+          <h3>Calories per day</h3>
+          <canvas id="progress"></canvas>
+        </div>
       </div>
   <div class="col">
     <canvas id="donut"></canvas>
@@ -63,9 +80,7 @@
   <div class="col"></div>
     </div>
     <div class="row">
-      <div>
-        <canvas id="progress"></canvas>
-      </div>
+      
     </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -128,6 +143,7 @@
       data,
       options: {
         indexAxis: 'y',
+        aspectRatio:4,
         plugins:{
           legend:{
             display: false
@@ -135,14 +151,15 @@
         },
         scales: {
           x: {
+            
             max:2500,
-            display:false,
+            display:true,
             grid:{
               display: false,
               drawBorder: false,
             },
             ticks:{
-              display:false,
+              display:true,
             }
           },
           y: {
