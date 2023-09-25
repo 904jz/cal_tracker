@@ -12,13 +12,14 @@ api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
 def add_food(request):
     values = []
     context = {}
+    cal_avg = 0
     if request.user.is_authenticated:
         user = Profile.objects.get(user=request.user)
         if request.method == 'POST':
             food_eaten = request.POST['food_eaten']
             query = food_eaten
             response = requests.get(api_url + query,headers={'X-Api-Key' : API_KEY})
-            # print(response.json())
+            print(response.json())
             items = response.json().get('items')
             carbs = 0
             fat = 0
@@ -31,7 +32,7 @@ def add_food(request):
                 calories += item['calories']
             
             total = carbs + protein + fat
-            # print(carbs/total)
+            print(carbs/total)
 
 
             user = Profile.objects.get(user=request.user)
@@ -42,6 +43,7 @@ def add_food(request):
             if user.last_updated.day != dt.today:
                 user.day_count += 1
             user.last_updated = dt.now()
+            cal_avg = user.calories/user.day_count
             user.save()
             # print(user.carbs)
             # print(user.fat)
@@ -51,7 +53,7 @@ def add_food(request):
 
         values = [user.carbs,user.fat,user.protein]
         exp = json.dumps(values)
-        context = {"nutrition":exp}   
+        context = {"nutrition":exp,"calorie":cal_avg}   
 
 
 

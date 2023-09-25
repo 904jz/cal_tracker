@@ -63,7 +63,9 @@
   <div class="col"></div>
     </div>
     <div class="row">
-      <div></div>
+      <div>
+        <canvas id="progress"></canvas>
+      </div>
     </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -90,6 +92,80 @@
         }]
       }
     });
+  </script>
+
+  <script>
+    const cnt = document.getElementById('progress').getContext('2d');
+
+    var num = Number.parseFloat(JSON.parse("{{calorie}}"));
+
+    const data = {
+      labels: ['Daily Calorie Intake'],
+      datasets: [{
+        label: 'calories per day',
+        data: [num],
+        backgroundColor: [
+          'rgba(255, 26, 104, 0.2)',
+          
+        ],
+        borderColor: [
+          'rgba(255, 26, 104, 1)',
+          
+        ],
+        borderWidth: 1,
+        borderSkipped: false,
+        borderRadius:5,
+        barPercentage:0.5,
+        categoryPercentage:0.8,
+      }]
+    };
+
+    
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        indexAxis: 'y',
+        plugins:{
+          legend:{
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            max:2500,
+            display:false,
+            grid:{
+              display: false,
+              drawBorder: false,
+            },
+            ticks:{
+              display:false,
+            }
+          },
+          y: {
+            display: false,
+            beginAtZero: true,
+            grid:{
+              display: false,
+              drawBorder: false,
+            },
+            ticks:{
+              display:false,
+            }
+          }
+        }
+      }
+      
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('progress'),
+      config
+    );
   </script>
   
   
