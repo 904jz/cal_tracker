@@ -20,7 +20,7 @@ def add_food(request):
             food_eaten = request.POST['food_eaten']
             query = food_eaten
             response = requests.get(api_url + query,headers={'X-Api-Key' : API_KEY})
-            print(response.json())
+            # print(response.json())
             items = response.json().get('items')
             carbs = 0
             fat = 0
@@ -33,7 +33,7 @@ def add_food(request):
                 calories += item['calories']
             
             total = carbs + protein + fat
-            print(carbs/total)
+            # print(carbs/total)
 
 
             user = Profile.objects.get(user=request.user)
