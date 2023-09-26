@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-rt@rpavu058-0-xv%mh2j-n$@_#^m_co=#qwp%_g24ch#!=02z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'caltrackr-597cbc2cf768.herokuapp.com',
+]
 
 
 # Application definition
