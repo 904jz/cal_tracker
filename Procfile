@@ -1,1 +1,1 @@
-web: gunicorn wsgi: cal_tracker
+web: gunicorn
