@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'caltrackr-597cbc2cf768.herokuapp.com',
+    '127.0.0.1',
 ]
 
 
